@@ -18,7 +18,10 @@ const TodoCard = ({ todo, eliminar, editar }) => {
           <TodoButton
             text='Eliminar'
             color='danger'
-            onClick={() => eliminar(todo.id)}
+            onClick={() => {
+              eliminar(todo.id);
+              editar(null);
+            }}
           />
         </div>
       </div>

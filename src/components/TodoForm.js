@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 let contador = 0;
 
-export const TodoForm = ({ agregar, edit, editar }) => {
+export const TodoForm = ({ agregar, edit, editar, setEdit }) => {
   const initialFormValues = {
     id: `${contador++}`,
     title: '',
@@ -49,6 +49,8 @@ export const TodoForm = ({ agregar, edit, editar }) => {
   useEffect(() => {
     if (edit) {
       setFormValue(edit);
+    } else {
+      setFormValue(initialFormValues);
     }
   }, [edit]);
 
@@ -74,6 +76,17 @@ export const TodoForm = ({ agregar, edit, editar }) => {
         <button type='submit' className='btn btn-primary btn-block mt-2'>
           {edit ? 'Editar ' : 'Agregar'}
         </button>
+        {edit ? (
+          <button
+            type='submit'
+            className='btn btn-warning btn-block mt-2 ms-2'
+            onClick={() => {
+              setEdit(null);
+            }}
+          >
+            Cancelar Edición
+          </button>
+        ) : null}
       </form>
       {error ? <div className='alert alert-danger mt-2'>{error}</div> : null}
       {succesMessage ? (

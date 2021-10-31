@@ -1,13 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { TodoForm } from './components/TodoForm';
 import TodoList from './components/TodoList';
 
+const ls = JSON.parse(localStorage.getItem('todos'));
+
 function App() {
-  const initialTodos = [
-    { id: '0', title: 'Learn React', description: 'Learn ReactJS with Hooks' },
-  ];
-  const [Todos, setTodos] = useState(initialTodos);
+  const [Todos, setTodos] = useState(ls || []);
   const [edit, setEdit] = useState(null);
+
+  useEffect(() => {
+    localStorage.setItem('todos', JSON.stringify(Todos));
+  }, [Todos]);
 
   const handleAdd = (formData) => {
     setTodos([formData, ...Todos]);
@@ -34,7 +37,12 @@ function App() {
           <TodoList todos={Todos} eliminar={handleEliminar} editar={setEdit} />
         </div>
         <div className='col-4'>
-          <TodoForm agregar={handleAdd} edit={edit} editar={handleEdit} />
+          <TodoForm
+            agregar={handleAdd}
+            edit={edit}
+            editar={handleEdit}
+            setEdit={setEdit}
+          />
         </div>
       </div>
     </div>
