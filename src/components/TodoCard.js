@@ -1,16 +1,25 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import TodoButton from './TodoButton';
 
-const TodoCard = ({ title = 'Título', description = 'Descripción' } = {}) => {
+const TodoCard = ({ todo, eliminar, editar }) => {
   return (
-    <div className='card w-75'>
+    <div className='card w-75 m-auto mt-4'>
       <div className='card-body'>
-        <h3 className='card-title text-center'>{title}</h3>
-        <p className='card-text text-center'>{description}</p>
+        <h3 className='card-title text-center'>{todo.title}</h3>
+        <p className='card-text text-center'>{todo.description}</p>
         <hr />
         <div className='d-flex justify-content-between'>
-          <TodoButton text='Editar' color='primary' />
-          <TodoButton text='Eliminar' color='danger' />
+          <TodoButton
+            onClick={() => editar(todo)}
+            text='Editar'
+            color='primary'
+            id={todo.id}
+          />
+          <TodoButton
+            text='Eliminar'
+            color='danger'
+            onClick={() => eliminar(todo.id)}
+          />
         </div>
       </div>
     </div>
